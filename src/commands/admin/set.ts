@@ -1,0 +1,18 @@
+import { Message } from "discord.js";
+import Command from "../../structures/Command";
+import Bot from "../../structures/Bot";
+
+export default class SetCommand extends Command {
+  constructor(bot: Bot) {
+    super(bot, {
+      name: "set",
+      category: "admin",
+    });
+  }
+
+  async execute(bot: Bot, message: Message) {
+    const lang = await bot.utils.getGuildLang(message.guild?.id);
+
+    return message.channel.send(lang.ADMIN.SET_CMD.replace("{url}", `${process.env["NEXT_PUBLIC_DASHBOARD_URL"]}`));
+  }
+}
